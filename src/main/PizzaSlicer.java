@@ -2,13 +2,14 @@ package main;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class PizzaSlicer {
 	private int row, column, minIngredient, maxCells;
 	private Scanner stdin;
 	private boolean[][] isT;
+	private ArrayList<Slice> s;
 
 	public PizzaSlicer(String filename) throws FileNotFoundException {
 		stdin = new Scanner(new File(filename));
