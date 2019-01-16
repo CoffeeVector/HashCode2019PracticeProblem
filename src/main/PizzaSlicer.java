@@ -30,6 +30,21 @@ public class PizzaSlicer {
 		}
 	}
 
+	/**
+	 * 
+	 * @param s slice object that describes the area of consideration (inclusively)
+	 * @return the amount of tomatoes in that region
+	 */
+	public int tomatoCount(Slice s) {
+		int count = 0;
+		for (int i = s.x1(); i <= s.x2(); i++) {
+			for (int j = s.y1(); j <= s.y2(); j++) {
+				count += (isT[j][i]) ? 1 : 0;
+			}
+		}
+		return count;
+	}
+
 	public int getRow() {
 		return row;
 	}
