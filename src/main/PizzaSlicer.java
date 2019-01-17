@@ -69,12 +69,47 @@ public class PizzaSlicer {
 	}
 
 	/**
+	 * 
+	 * @param xInitial x coordinate for upper left corner of slice
+	 * @param yInitial y coordinate for upper left corner of slice
+	 * @param area     Area of slices
+	 * @return
+	 */
+	public ArrayList<Slice> searchValidSlices(int xInitial, int yInitial, int area, Boolean[][] isT) {
+		ArrayList<Slice> output = new ArrayList<Slice>();
+		for (int i = 1; i < area; i++) {// i is the width.
+			if (area % i == 0) {// if area divides width cleanly, otherwise do not consider.
+				Slice s = new Slice(xInitial, yInitial, xInitial + i - 1, yInitial + area / i - 1);
+				if (isSliceValid(s)) {
+					output.add(s);
+				}
+			}
+		}
+		return output;
+	}
+
+	/**
 	 * "cutting the slice out of the pizza" refers to saving the Slice information
 	 * and also nulling the ingredients that used to be there.
 	 * 
 	 * @param s Slice under consideration
 	 */
 	public void cutSlice(Slice s) {
+		for (int i = s.x1(); i <= s.x2(); i++) {
+			for (int j = s.y1(); j <= s.y2(); j++) {
+				isT[j][i] = null;
+			}
+		}
+		this.s.add(s);// add Slice s to ArrayList<Slice> s
+	}
+
+	/**
+	 * "cutting the slice out of the pizza" refers to saving the Slice information
+	 * and also nulling the ingredients that used to be there.
+	 * 
+	 * @param s Slice under consideration
+	 */
+	public void cutSlice(Slice s, Boolean[][] isT) {
 		for (int i = s.x1(); i <= s.x2(); i++) {
 			for (int j = s.y1(); j <= s.y2(); j++) {
 				isT[j][i] = null;
