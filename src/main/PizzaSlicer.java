@@ -64,6 +64,36 @@ public class PizzaSlicer {
 		return output;
 	}
 
+	/**
+	 * 
+	 * @param s Slice object under consideration
+	 * @return if the slice is small enough, contains enough of each ingredients,
+	 *         contains no nulls (cut parts), and doesn't go off the pizza, then
+	 *         return true. Otherwise return false.
+	 */
+	public boolean isSliceValid(Slice s) {
+		int mushroomCount = 0;
+		int tomatoCount = 0;
+		for (int i = s.y1(); i <= s.y2(); i++) {
+			for (int j = s.x1(); j <= s.x2(); j++) {
+				try {
+					if (isT[i][j] == null) {
+						return false;
+					}
+					if (isT[i][j]) {
+						tomatoCount++;
+					} else {
+						mushroomCount++;
+					}
+
+				} catch (ArrayIndexOutOfBoundsException e) {
+					return false;
+				}
+			}
+		}
+		return (mushroomCount >= minIngredient && tomatoCount >= minIngredient && s.area() <= maxCells);
+	}
+
 	public int getRow() {
 		return row;
 	}
