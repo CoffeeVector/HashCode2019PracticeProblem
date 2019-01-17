@@ -29,4 +29,8 @@ public class Slice {
 	public int area() {
 		return (x2 - x1 + 1) * (y2 - y1 + 1);
 	}
+
+	public String toString() {
+		return "( " + x1 + ", " + y1 + " ) " + "( " + x2 + ", " + y2 + " )";
+	}
 }
