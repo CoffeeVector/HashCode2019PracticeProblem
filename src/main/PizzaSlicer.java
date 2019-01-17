@@ -25,6 +25,8 @@ public class PizzaSlicer {
 			for (int i = 0; i < column; i++) {
 				if (toppings.charAt(i) == 'T') {
 					isT[j][i] = true;
+				} else {
+					isT[j][i] = false;
 				}
 			}
 		}
@@ -84,6 +86,17 @@ public class PizzaSlicer {
 			for (int j = 0; j < isT[i].length; j++) {
 				out[i][j] = isT[i][j];
 			}
+		}
+		return out;
+	}
+
+	public String printPizza() {
+		String out = "";
+		for (int i = 0; i < isT.length; i++) {
+			for (int j = 0; j < isT[i].length; j++) {
+				out += (isT[i][j]) ? "T" : "M";
+			}
+			out += "\n";
 		}
 		return out;
 	}

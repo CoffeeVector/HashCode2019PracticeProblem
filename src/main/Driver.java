@@ -10,9 +10,6 @@ public class Driver {
 		System.out.println("Columns: " + ps.getColumn());
 		System.out.println("MI: " + ps.getMinIngredient());
 		System.out.println("MC: " + ps.getMaxCells());
-		System.out.println(Arrays.deepToString(ps.getIsT()));
-		Slice s = new Slice(0, 0, 1, 2);
-		System.out.println(s.area());
-		System.out.println(ps.tomatoCount(s));
+		System.out.println(ps.printPizza());
 	}
 }
