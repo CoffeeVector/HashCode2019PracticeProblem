@@ -65,6 +65,21 @@ public class PizzaSlicer {
 	}
 
 	/**
+	 * "cutting the slice out of the pizza" refers to saving the Slice information
+	 * and also nulling the ingredients that used to be there.
+	 * 
+	 * @param s Slice under consideration
+	 */
+	public void cutSlice(Slice s) {
+		for (int i = s.x1(); i <= s.x2(); i++) {
+			for (int j = s.y1(); j <= s.y2(); j++) {
+				isT[i][j] = null;
+			}
+		}
+		this.s.add(s);// add Slice s to ArrayList<Slice> s
+	}
+
+	/**
 	 * 
 	 * @param s Slice object under consideration
 	 * @return if the slice is small enough, contains enough of each ingredients,
