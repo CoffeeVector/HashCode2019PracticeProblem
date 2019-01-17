@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class PizzaSlicer {
 	private int row, column, minIngredient, maxCells;
 	private Scanner stdin;
-	private boolean[][] isT;
+	private Boolean[][] isT;
 	private ArrayList<Slice> s;
 
 	public PizzaSlicer(String filename) throws FileNotFoundException {
@@ -19,7 +19,7 @@ public class PizzaSlicer {
 		minIngredient = Integer.parseInt(dimensionScanner.next());
 		maxCells = Integer.parseInt(dimensionScanner.next());
 		dimensionScanner.close();
-		isT = new boolean[row][column];
+		isT = new Boolean[row][column];
 		for (int j = 0; j < row; j++) {
 			String toppings = stdin.next();
 			for (int i = 0; i < column; i++) {
@@ -43,6 +43,23 @@ public class PizzaSlicer {
 			}
 		}
 		return count;
+	}
+
+	/**
+	 * 
+	 * @param xInitial x coordinate for upper left corner of slice
+	 * @param yInitial y coordinate for upper left corner of slice
+	 * @param area     Area of slices
+	 * @return
+	 */
+	public ArrayList<Slice> searchValidSlices(int xInitial, int yInitial, int area) {
+		ArrayList<Slice> output = new ArrayList<Slice>();
+		for (int i = 1; i < area; i++) {// i is the width.
+			if (area % i == 0) {// if area divides width cleanly, otherwise do not consider.
+				output.add(new Slice(xInitial, yInitial, xInitial + i - 1, yInitial + area / i - 1));
+			}
+		}
+		return output;
 	}
 
 	public int getRow() {
