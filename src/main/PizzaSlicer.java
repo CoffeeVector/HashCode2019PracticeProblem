@@ -30,6 +30,7 @@ public class PizzaSlicer {
 				}
 			}
 		}
+		s = new ArrayList<Slice>();
 	}
 
 	/**
@@ -58,7 +59,10 @@ public class PizzaSlicer {
 		ArrayList<Slice> output = new ArrayList<Slice>();
 		for (int i = 1; i < area; i++) {// i is the width.
 			if (area % i == 0) {// if area divides width cleanly, otherwise do not consider.
-				output.add(new Slice(xInitial, yInitial, xInitial + i - 1, yInitial + area / i - 1));
+				Slice s = new Slice(xInitial, yInitial, xInitial + i - 1, yInitial + area / i - 1);
+				if (isSliceValid(s)) {
+					output.add(s);
+				}
 			}
 		}
 		return output;
@@ -73,7 +77,7 @@ public class PizzaSlicer {
 	public void cutSlice(Slice s) {
 		for (int i = s.x1(); i <= s.x2(); i++) {
 			for (int j = s.y1(); j <= s.y2(); j++) {
-				isT[i][j] = null;
+				isT[j][i] = null;
 			}
 		}
 		this.s.add(s);// add Slice s to ArrayList<Slice> s
@@ -109,6 +113,24 @@ public class PizzaSlicer {
 		return (mushroomCount >= minIngredient && tomatoCount >= minIngredient && s.area() <= maxCells);
 	}
 
+	public void cutPizza() {
+		for (int i = 0; i < isT.length; i++) {
+			for (int j = 0; j < isT[i].length; j++) {
+				if (isT[i][j] != null) {
+					for (int a = maxCells; a >= minIngredient * 2; a--) {// Attempt for maximum area, then go down until
+																			// the minimum area.
+						ArrayList<Slice> validSlices = searchValidSlices(j, i, a);
+						if (!validSlices.isEmpty()) {// if there exists a valid slice for given area...
+							System.out.println(validSlices.get(0));
+							cutSlice(validSlices.get(0));// simply use the first valid one
+							break;// cut the slice and then move on.
+						}
+					}
+				}
+			}
+		}
+	}
+
 	public int getRow() {
 		return row;
 	}
@@ -133,6 +155,10 @@ public class PizzaSlicer {
 			}
 		}
 		return out;
+	}
+
+	public ArrayList<Slice> getSlices() {
+		return (ArrayList<Slice>) s.clone();
 	}
 
 	public String printPizza() {

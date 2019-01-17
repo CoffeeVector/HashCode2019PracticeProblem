@@ -11,6 +11,7 @@ public class Driver {
 		System.out.println("MI: " + ps.getMinIngredient());
 		System.out.println("MC: " + ps.getMaxCells());
 		System.out.println(ps.printPizza());
-		System.out.println(ps.isSliceValid(new Slice(0, 0, 1, 2)));
+		ps.cutPizza();
+		System.out.println(ps.getSlices());
 	}
 }
