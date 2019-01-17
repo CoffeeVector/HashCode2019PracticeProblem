@@ -157,6 +157,7 @@ public class PizzaSlicer {
 		return out;
 	}
 
+	@SuppressWarnings("unchecked")
 	public ArrayList<Slice> getSlices() {
 		return (ArrayList<Slice>) s.clone();
 	}
