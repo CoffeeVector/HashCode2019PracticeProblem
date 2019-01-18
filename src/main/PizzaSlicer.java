@@ -121,7 +121,6 @@ public class PizzaSlicer {
 																			// the minimum area.
 						ArrayList<Slice> validSlices = searchValidSlices(j, i, a);
 						if (!validSlices.isEmpty()) {// if there exists a valid slice for given area...
-							System.out.println(validSlices.get(0));
 							cutSlice(validSlices.get(0));// simply use the first valid one
 							break;// cut the slice and then move on.
 						}

@@ -1,17 +1,18 @@
 package main;
 
 import java.io.FileNotFoundException;
-import java.util.Arrays;
 
 public class Driver {
 	public static void main(String[] args) throws FileNotFoundException {
-		PizzaSlicer ps = new PizzaSlicer("a_example.in");
+		PizzaSlicer ps = new PizzaSlicer("b_small.in");
 		System.out.println("Rows: " + ps.getRow());
 		System.out.println("Columns: " + ps.getColumn());
 		System.out.println("MI: " + ps.getMinIngredient());
 		System.out.println("MC: " + ps.getMaxCells());
 		System.out.println(ps.printPizza());
 		ps.cutPizza();
-		System.out.println(ps.getSlices());
+		for (Slice s : ps.getSlices()) {
+			System.out.println(s);
+		}
 	}
 }
