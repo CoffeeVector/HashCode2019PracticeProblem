@@ -1,7 +1,10 @@
 package main;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -31,6 +34,7 @@ public class PizzaSlicer {
 			}
 		}
 		s = new ArrayList<Slice>();
+		System.out.println("File Read.");
 	}
 
 	/**
@@ -113,12 +117,16 @@ public class PizzaSlicer {
 		return (mushroomCount >= minIngredient && tomatoCount >= minIngredient && s.area() <= maxCells);
 	}
 
+	/**
+	 * Greedily cuts the biggest slices possible hoping to cover the biggest area.
+	 */
 	public void cutPizza() {
 		for (int i = 0; i < isT.length; i++) {
 			for (int j = 0; j < isT[i].length; j++) {
 				if (isT[i][j] != null) {
 					for (int a = maxCells; a >= minIngredient * 2; a--) {// Attempt for maximum area, then go down until
 																			// the minimum area.
+						System.out.println("i: " + i + " j: " + j + " a: " + a);
 						ArrayList<Slice> validSlices = searchValidSlices(j, i, a);
 						if (!validSlices.isEmpty()) {// if there exists a valid slice for given area...
 							cutSlice(validSlices.get(0));// simply use the first valid one
@@ -170,5 +178,15 @@ public class PizzaSlicer {
 			out += "\n";
 		}
 		return out;
+	}
+
+	public void writeSlices(String filename) throws IOException {
+		BufferedWriter bfw = new BufferedWriter(new FileWriter(new File(filename)));
+		bfw.append(s.size() + "\n");
+		for (Slice ss : s) {
+			bfw.append(ss.y1() + " " + ss.x1() + " " + ss.y2() + " " + ss.y1() + "\n");
+		}
+		bfw.flush();
+		bfw.close();
 	}
 }
