@@ -91,4 +91,22 @@ public class Pizza {
 		return new Pizza(isTOutput, slicesOutput);
 	}
 
+	public static Pizza slice(Pizza a, Slice s) throws PizzaMismatchException {
+		ArrayList<Slice> slicesOutput = new ArrayList<Slice>();
+		slicesOutput.addAll(a.getSlices());
+		slicesOutput.add(s);
+		Boolean[][] isTOutput = new Boolean[a.getIsT().length][a.getIsT()[0].length];
+		for (int i = 0; i < isTOutput.length; i++) {
+			for (int j = 0; j < isTOutput[i].length; j++) {
+				if (a.getIsT()[i][j] == null && i >= s.y1() && i <= s.y2() && j >= s.x1() && j <= s.x2()) {
+					throw new PizzaMismatchException();
+				} else if (a.getIsT()[i][j] == null || (i >= s.y1() && i <= s.y2() && j >= s.x1() && j <= s.x2())) {
+					isTOutput[i][j] = null;
+				} else {
+					isTOutput[i][j] = a.getIsT()[i][j];
+				}
+			}
+		}
+		return new Pizza(isTOutput, slicesOutput);
+	}
 }

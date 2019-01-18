@@ -136,29 +136,29 @@ public class PizzaSlicer {
 	}
 
 	public ArrayList<Pizza> cutPizza() {
-		ArrayList<Pizza> singleSlices = new ArrayList<Pizza>();// all the ways to cut a single slice out.
+		ArrayList<Slice> singleSlices = new ArrayList<Slice>();
 		ArrayList<Pizza> pizzas = new ArrayList<Pizza>();// all the current possible pizzas
 		ArrayList<Pizza> pizzas1 = new ArrayList<Pizza>();// all the possible pizzas in the next generation
 		for (int i = 0; i < isT.length; i++) {
 			for (int j = 0; j < isT[0].length; j++) {
 				for (int a = maxCells; a >= minIngredient * 2; a--) {// Attempt for maximum area, then go down until
-					for (Slice s : searchValidSlices(j, i, a)) {
-						ArrayList<Slice> sList = new ArrayList<Slice>();
-						sList.add(s);
-						singleSlices.add(new Pizza(cutSlice(s, isT), sList));
-					}
+					singleSlices.addAll(searchValidSlices(j, i, a));
 				}
 			}
 		}
-		pizzas.addAll(singleSlices);
-		pizzas1.addAll(singleSlices);
+		for (Slice s : singleSlices) {
+			ArrayList<Slice> sList = new ArrayList<Slice>();
+			sList.add(s);
+			Pizza p = new Pizza(cutSlice(s, isT), sList);
+			pizzas1.add(p);
+		}
 		while (!pizzas1.isEmpty()) {// if pizzas1 is empty, that means none of the slices can be combined
 			pizzas = pizzas1;
 			pizzas1 = new ArrayList<Pizza>();
 			for (int i = 0; i < pizzas.size(); i++) {// loop through all the current pizzas
 				for (int j = 0; j < singleSlices.size(); j++) {
 					try {
-						pizzas1.add(Pizza.combine(pizzas.get(i), singleSlices.get(j)));
+						pizzas1.add(Pizza.slice(pizzas.get(i), singleSlices.get(j)));
 					} catch (PizzaMismatchException e) {
 						// do nothing
 					}
@@ -166,6 +166,17 @@ public class PizzaSlicer {
 			}
 		}
 		return pizzas;
+	}
+
+	public Pizza bestCut() {
+		ArrayList<Pizza> cutPizzas = cutPizza();
+		Pizza best = cutPizzas.get(0);
+		for (Pizza p : cutPizzas) {
+			if (p.getLeftOver() < best.getLeftOver()) {
+				best = p;
+			}
+		}
+		return best;
 	}
 
 	public int getRow() {
