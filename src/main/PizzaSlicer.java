@@ -184,7 +184,7 @@ public class PizzaSlicer {
 		BufferedWriter bfw = new BufferedWriter(new FileWriter(new File(filename)));
 		bfw.append(s.size() + "\n");
 		for (Slice ss : s) {
-			bfw.append(ss.y1() + " " + ss.x1() + " " + ss.y2() + " " + ss.y1() + "\n");
+			bfw.append(ss.y1() + " " + ss.x1() + " " + ss.y2() + " " + ss.x2() + "\n");
 		}
 		bfw.flush();
 		bfw.close();
