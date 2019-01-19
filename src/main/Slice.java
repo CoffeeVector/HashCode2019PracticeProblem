@@ -30,6 +30,10 @@ public class Slice {
 		return (x2 - x1 + 1) * (y2 - y1 + 1);
 	}
 
+	public boolean contains(int x, int y) {
+		return (x >= x1() && x <= x2() && y >= y1() && y <= y2());
+	}
+
 	public String toString() {
 		return "( " + x1 + ", " + y1 + " ) " + "( " + x2 + ", " + y2 + " )";
 	}
