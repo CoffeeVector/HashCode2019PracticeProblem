@@ -149,11 +149,14 @@ public class PizzaSlicer {
 		for (Slice s : singleSlices) {
 			ArrayList<Slice> sList = new ArrayList<Slice>();
 			sList.add(s);
-			Pizza p = new Pizza(cutSlice(s, isT), sList);
+			Pizza p = new Pizza(isT.length, isT[0].length, sList);
 			pizzas1.add(p);
 		}
+		int generation = 0;
+		System.out.println("Generation: " + generation);
 		while (!pizzas1.isEmpty()) {// if pizzas1 is empty, that means none of the slices can be combined
 			pizzas = pizzas1;
+			System.out.println("Pizzas: " + pizzas.size());
 			pizzas1 = new ArrayList<Pizza>();
 			for (int i = 0; i < pizzas.size(); i++) {// loop through all the current pizzas
 				for (int j = 0; j < singleSlices.size(); j++) {
@@ -164,6 +167,7 @@ public class PizzaSlicer {
 					}
 				}
 			}
+			generation++;
 		}
 		return pizzas;
 	}
